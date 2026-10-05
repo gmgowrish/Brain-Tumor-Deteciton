@@ -54,7 +54,7 @@ ROOT_URLCONF = 'BrainTumorDetection.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'assets/templates')],
+        'DIRS': [os.path.join(BASE_DIR, 'templates'), os.path.join(BASE_DIR, 'assets/templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -115,6 +115,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'assets/static'), ]
+# Optional theme files (CSS/JS/images); vendor libraries load from a CDN.
+STATICFILES_DIRS = [d for d in [os.path.join(BASE_DIR, 'assets/static')] if os.path.isdir(d)]
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 MEDIA_URL = "/media/"

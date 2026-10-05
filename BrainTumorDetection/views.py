@@ -7,6 +7,7 @@ def index(request):
 
 
 def logout(request):
+    request.session.flush()
     return render(request, 'index.html', {})
 
 

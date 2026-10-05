@@ -19,7 +19,7 @@
 The project classifies MRI brain scans as **tumor / no tumor** using a convolutional neural network. A Django web app wraps it with:
 
 - **User accounts**: register, wait for admin approval, log in, then train the model or run detection.
-- **Admin panel**: view registered users and activate their accounts.
+- **Admin panel**: view registered users and activate their accounts (admins log in with a Django superuser account).
 - **Detection tool**: pick an MRI image and either get a tumor prediction or highlight the tumor region.
 
 ---
@@ -67,28 +67,29 @@ pip install -r requirements.txt
 
 > Requirements are pinned to **TensorFlow 2.10**, so use **Python 3.10** or older.
 
-### 2. Download the extra files
-
-Some large files are kept on Google Drive. Download them and place them in the project root:
-
-| Folder | Contents | Link |
-|---|---|---|
-| `assets/` | HTML templates and CSS | [Google Drive](https://drive.google.com/drive/folders/1AzBSzZosYJ-NV-eBPJ99CzWe4Dq0CXwK?usp=drive_link) |
-| `media/` | MRI dataset (`brain_tumor_dataset/train` and `test`) | [Google Drive](https://drive.google.com/drive/folders/15143k_rNbUW0defCdWeL-ByRT9fGtEGj?usp=drive_link) |
-
-### 3. Run
+### 2. Set up the database and an admin account
 
 ```bash
 python manage.py migrate
+python manage.py createsuperuser     # this account logs in on the Admin page
+```
+
+### 3. (Optional) get the dataset for training
+
+Training needs the MRI dataset in `media/brain_tumor_dataset/` (`train/` and `test/` folders). Download it from [Google Drive](https://drive.google.com/drive/folders/15143k_rNbUW0defCdWeL-ByRT9fGtEGj?usp=drive_link). Detection works without it, using the included pre-trained model.
+
+### 4. Run
+
+```bash
 python manage.py runserver
 ```
 
 Open **http://127.0.0.1:8000/**.
 
-### 4. Log in
+### 5. Use it
 
 1. **Register** a user account.
-2. Log in as **admin** (default credentials `admin` / `admin`, set in `admins/views.py`), open **Registered Users** and **activate** the account.
+2. Log in on the **Admin** page with your superuser account, open **Registered Users** and **activate** the account.
 3. Log in as the user and use **Detect** or **Training**.
 
 > The detection tool opens a **desktop (Tkinter) window**, so run the app on your own computer, not a remote server.
